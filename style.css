@@ -14,6 +14,8 @@ body {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   text-align: center;
+  max-width: 400px;
+  width: 100%;
 }
 
 .image-container {
@@ -28,24 +30,23 @@ body {
   height: auto;
 }
 
-.guess-form input {
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-right: 10px;
+.choices-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
 
-.guess-form button {
-  padding: 10px 20px;
+.choice-btn {
+  padding: 12px;
   font-size: 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
   border-radius: 4px;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.guess-form button:hover {
-  background-color: #0056b3;
+.choice-btn:hover {
+  background-color: #e2e6ea;
+  border-color: #dae0e5;
 }
