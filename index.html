@@ -6,14 +6,13 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="game-container">
-    <h1>Who's That Pokémon?</h1>
+  <main class="game-container">
+    <h1 class="logo-text">WHO'S THAT POKÉMON?</h1>
     
-    <div class="image-container">
-      <!-- Loading spinner element -->
+    <div class="display-screen">
       <div id="loader" class="loader"></div>
-      
-      <img id="pokemon-image" src="" alt="Mystery Pokemon" class="pokemon-image hidden">
+      <!-- Added silhouette class -->
+      <img id="pokemon-image" src="" alt="Mystery Pokemon" class="pokemon-image silhouette hidden">
     </div>
     
     <div class="choices-grid" id="choices-container">
@@ -24,7 +23,7 @@
     </div>
     
     <p id="result-message"></p>
-  </div>
+  </main>
 
   <script src="app.js"></script>
 </body>

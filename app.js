@@ -2,6 +2,7 @@ const TOTAL_POKEMON = 151;
 let pokemonList = [];
 let targetPokemon = null;
 let choices = [];
+let isLocked = false; // Lock interactions during reveal state
 
 const imageEl = document.getElementById('pokemon-image');
 const loaderEl = document.getElementById('loader');
@@ -23,10 +24,12 @@ async function initGame() {
 
 async function startNewRound() {
   resultMessage.textContent = '';
+  isLocked = false;
   
-  // Show loader, hide image, disable choice buttons
+  // Set image to silhouette and hide it
+  imageEl.className = 'pokemon-image silhouette hidden';
   loaderEl.classList.remove('hidden');
-  imageEl.classList.add('hidden');
+  
   buttons.forEach(btn => {
     btn.disabled = true;
     btn.textContent = 'Loading...';
@@ -51,7 +54,6 @@ async function startNewRound() {
     choices = [targetPokemon.name, ...distractorNames];
     choices.sort(() => Math.random() - 0.5);
     
-    // Set source. Show image and hide loader only when loaded
     imageEl.src = targetPokemon.sprites.other['official-artwork'].front_default || targetPokemon.sprites.front_default;
     
     imageEl.onload = () => {
@@ -70,19 +72,25 @@ async function startNewRound() {
 
 buttons.forEach((button, index) => {
   button.addEventListener('click', function() {
+    if (isLocked) return;
+    isLocked = true;
+    
     const selectedName = choices[index];
     const correctAnswer = targetPokemon.name;
+    
+    // Reveal Silhouette
+    imageEl.className = 'pokemon-image revealed';
     
     buttons.forEach(btn => btn.disabled = true);
     
     if (selectedName === correctAnswer) {
       this.classList.add('correct');
-      resultMessage.textContent = `Correct! It is ${correctAnswer.toUpperCase()}!`;
-      resultMessage.style.color = '#28a745';
+      resultMessage.textContent = `Correct! It's ${correctAnswer.toUpperCase()}!`;
+      resultMessage.style.color = '#00f0ad';
     } else {
       this.classList.add('incorrect');
-      resultMessage.textContent = `Incorrect! It is ${correctAnswer.toUpperCase()}!`;
-      resultMessage.style.color = '#dc3545';
+      resultMessage.textContent = `Wrong! It's ${correctAnswer.toUpperCase()}!`;
+      resultMessage.style.color = '#ff3c5a';
       
       buttons.forEach((btn, idx) => {
         if (choices[idx] === correctAnswer) {
@@ -90,6 +98,9 @@ buttons.forEach((button, index) => {
         }
       });
     }
+    
+    // Auto progress to next round after 2.5s
+    setTimeout(startNewRound, 2500);
   });
 });
 
