@@ -1,39 +1,44 @@
-const TOTAL_POKEMON = 151; // Target Generation 1
+const TOTAL_POKEMON = 151;
 let pokemonList = [];
 let targetPokemon = null;
 let choices = [];
 
 const imageEl = document.getElementById('pokemon-image');
+const loaderEl = document.getElementById('loader');
 const resultMessage = document.getElementById('result-message');
 const buttons = document.querySelectorAll('.choice-btn');
 
 async function initGame() {
   try {
-    // 1. Fetch names for selection
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${TOTAL_POKEMON}`);
     const data = await response.json();
     pokemonList = data.results;
     
-    // 2. Start round
     startNewRound();
   } catch (error) {
-    console.error('API Error:', error);
-    resultMessage.textContent = 'API load error. Refresh page.';
+    console.error(error);
+    resultMessage.textContent = 'API Error.';
   }
 }
 
 async function startNewRound() {
   resultMessage.textContent = '';
   
-  // Pick random target
+  // Show loader, hide image, disable choice buttons
+  loaderEl.classList.remove('hidden');
+  imageEl.classList.add('hidden');
+  buttons.forEach(btn => {
+    btn.disabled = true;
+    btn.textContent = 'Loading...';
+    btn.className = 'choice-btn';
+  });
+
   const targetId = Math.floor(Math.random() * TOTAL_POKEMON) + 1;
   
   try {
-    // Fetch target details
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${targetId}`);
     targetPokemon = await response.json();
     
-    // Pick 3 distractors
     const distractorNames = [];
     while (distractorNames.length < 3) {
       const randIndex = Math.floor(Math.random() * pokemonList.length);
@@ -43,21 +48,23 @@ async function startNewRound() {
       }
     }
     
-    // Shuffle choices
     choices = [targetPokemon.name, ...distractorNames];
     choices.sort(() => Math.random() - 0.5);
     
-    // Render
-    buttons.forEach((btn, idx) => {
-      btn.textContent = choices[idx];
-      btn.className = 'choice-btn';
-      btn.disabled = false;
-    });
-    
+    // Set source. Show image and hide loader only when loaded
     imageEl.src = targetPokemon.sprites.other['official-artwork'].front_default || targetPokemon.sprites.front_default;
-    imageEl.classList.remove('hidden');
+    
+    imageEl.onload = () => {
+      loaderEl.classList.add('hidden');
+      imageEl.classList.remove('hidden');
+      
+      buttons.forEach((btn, idx) => {
+        btn.textContent = choices[idx];
+        btn.disabled = false;
+      });
+    };
   } catch (error) {
-    console.error('Error starting round:', error);
+    console.error(error);
   }
 }
 

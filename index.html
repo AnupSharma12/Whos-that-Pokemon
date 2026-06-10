@@ -10,18 +10,22 @@
     <h1>Who's That Pokémon?</h1>
     
     <div class="image-container">
-      <!-- Image is set dynamically by JS -->
+      <!-- Loading spinner element -->
+      <div id="loader" class="loader"></div>
+      
       <img id="pokemon-image" src="" alt="Mystery Pokemon" class="pokemon-image hidden">
     </div>
     
     <div class="choices-grid" id="choices-container">
-      <button class="choice-btn" data-index="0">Loading...</button>
-      <button class="choice-btn" data-index="1">Loading...</button>
-      <button class="choice-btn" data-index="2">Loading...</button>
-      <button class="choice-btn" data-index="3">Loading...</button>
+      <button class="choice-btn" data-index="0" disabled>Loading...</button>
+      <button class="choice-btn" data-index="1" disabled>Loading...</button>
+      <button class="choice-btn" data-index="2" disabled>Loading...</button>
+      <button class="choice-btn" data-index="3" disabled>Loading...</button>
     </div>
+    
     <p id="result-message"></p>
   </div>
+
   <script src="app.js"></script>
 </body>
 </html>
