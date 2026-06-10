@@ -10,14 +10,15 @@
     <h1>Who's That Pokémon?</h1>
     
     <div class="image-container">
-      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Mystery Pokemon" class="pokemon-image">
+      <!-- Image is set dynamically by JS -->
+      <img id="pokemon-image" src="" alt="Mystery Pokemon" class="pokemon-image hidden">
     </div>
     
     <div class="choices-grid" id="choices-container">
-      <button class="choice-btn">Bulbasaur</button>
-      <button class="choice-btn">Charmander</button>
-      <button class="choice-btn">Pikachu</button>
-      <button class="choice-btn">Squirtle</button>
+      <button class="choice-btn" data-index="0">Loading...</button>
+      <button class="choice-btn" data-index="1">Loading...</button>
+      <button class="choice-btn" data-index="2">Loading...</button>
+      <button class="choice-btn" data-index="3">Loading...</button>
     </div>
     <p id="result-message"></p>
   </div>

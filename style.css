@@ -23,6 +23,10 @@ body {
   padding: 20px;
   border-radius: 4px;
   margin-bottom: 20px;
+  min-height: 240px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .pokemon-image {
@@ -44,6 +48,7 @@ body {
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s ease;
+  text-transform: capitalize;
 }
 
 .choice-btn:hover:not(:disabled) {
@@ -72,4 +77,8 @@ body {
   margin-top: 15px;
   font-weight: bold;
   font-size: 18px;
+}
+
+.hidden {
+  display: none !important;
 }
