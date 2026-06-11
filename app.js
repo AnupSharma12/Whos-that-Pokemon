@@ -4,11 +4,12 @@ let targetPokemon = null;
 let choices = [];
 let isLocked = false;
 let hintUsed = false;
+let soundEnabled = true;
 
 // Score and Streak state
 let score = 0;
 let streak = 0;
-let highScore = parseInt(localStorage.getItem('steps_high_score_sk')) || 0;
+let highScore = parseInt(localStorage.getItem('steps_high_score_au')) || 0;
 
 const imageEl = document.getElementById('pokemon-image');
 const loaderEl = document.getElementById('loader');
@@ -23,6 +24,53 @@ const hintDisplay = document.getElementById('hint-display');
 const hintText = document.getElementById('hint-text');
 const hintBtn = document.getElementById('hint-btn');
 const skipBtn = document.getElementById('skip-btn');
+const soundBtn = document.getElementById('sound-btn');
+
+// ==========================================
+// Sound Synthesis Engine
+// ==========================================
+let audioCtx = null;
+
+function initAudio() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+}
+
+function playNotes(notes) {
+  if (!soundEnabled) return;
+  try {
+    initAudio();
+    const now = audioCtx.currentTime;
+    notes.forEach(note => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = note.type || 'sine';
+      osc.frequency.setValueAtTime(note.freq, now + (note.delay || 0));
+      gain.gain.setValueAtTime(0.08, now + (note.delay || 0));
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + (note.delay || 0) + note.duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now + (note.delay || 0));
+      osc.stop(now + (note.delay || 0) + note.duration);
+    });
+  } catch(e) {
+    console.warn(e);
+  }
+}
+
+const AudioSFX = {
+  click: () => playNotes([{ freq: 400, duration: 0.08, type: 'triangle' }]),
+  win: () => playNotes([
+    { freq: 523, duration: 0.08, delay: 0 },
+    { freq: 659, duration: 0.08, delay: 0.08 },
+    { freq: 784, duration: 0.18, delay: 0.16 }
+  ]),
+  lose: () => playNotes([
+    { freq: 220, duration: 0.1, delay: 0, type: 'sawtooth' },
+    { freq: 150, duration: 0.3, delay: 0.08, type: 'sawtooth' }
+  ])
+};
 
 function updateScores() {
   scoreEl.textContent = String(score).padStart(2, '0');
@@ -34,6 +82,15 @@ async function initGame() {
   updateScores();
   hintBtn.addEventListener('click', revealHint);
   skipBtn.addEventListener('click', skipRound);
+  
+  soundBtn.addEventListener('click', () => {
+    soundEnabled = !soundEnabled;
+    soundBtn.textContent = `Sound: ${soundEnabled ? 'ON' : 'OFF'}`;
+    if (soundEnabled) {
+      initAudio();
+      AudioSFX.click();
+    }
+  });
   
   try {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${TOTAL_POKEMON}`);
@@ -105,6 +162,7 @@ function revealHint() {
   if (isLocked || hintUsed || !targetPokemon) return;
   hintUsed = true;
   hintBtn.disabled = true;
+  AudioSFX.click();
   
   const types = targetPokemon.types.map(t => t.type.name).join(', ');
   hintText.textContent = `Type: ${types}`;
@@ -115,6 +173,7 @@ function revealHint() {
 function skipRound() {
   if (isLocked || !targetPokemon) return;
   isLocked = true;
+  AudioSFX.click();
   
   hintBtn.disabled = true;
   skipBtn.disabled = true;
@@ -123,7 +182,6 @@ function skipRound() {
   const correctAnswer = targetPokemon.name;
   imageEl.className = 'pokemon-image revealed';
   
-  // Highlight correct answer
   buttons.forEach((btn, idx) => {
     if (choices[idx] === correctAnswer) {
       btn.classList.add('correct');
@@ -132,7 +190,6 @@ function skipRound() {
     }
   });
   
-  // Break streak and score
   streak = 0;
   score = 0;
   updateScores();
@@ -167,11 +224,13 @@ buttons.forEach((button, index) => {
       
       if (score > highScore) {
         highScore = score;
-        localStorage.setItem('steps_high_score_sk', highScore);
+        localStorage.setItem('steps_high_score_au', highScore);
       }
       
       streakEl.classList.add('streak-active');
       setTimeout(() => streakEl.classList.remove('streak-active'), 400);
+      
+      AudioSFX.win();
     } else {
       this.classList.add('incorrect');
       resultMessage.textContent = `Wrong! It's ${correctAnswer.toUpperCase()}!`;
@@ -187,6 +246,8 @@ buttons.forEach((button, index) => {
           btn.style.opacity = '0.4';
         }
       });
+      
+      AudioSFX.lose();
     }
     
     updateScores();

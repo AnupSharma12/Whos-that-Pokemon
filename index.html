@@ -6,6 +6,10 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Scrolling Stars and scanline retro overlays -->
+  <div class="stars-background"></div>
+  <div class="scanlines"></div>
+
   <main class="game-container">
     <div class="scoreboard">
       <div class="score-box">
@@ -24,9 +28,18 @@
 
     <h1 class="logo-text">WHO'S THAT POKÉMON?</h1>
     
-    <div class="display-screen">
-      <div id="loader" class="loader"></div>
-      <img id="pokemon-image" src="" alt="Mystery Pokemon" class="pokemon-image silhouette hidden">
+    <!-- Outer CRT bezel frame -->
+    <div class="screen-outer-wrapper">
+      <div class="screen-bezel">
+        <!-- LED indicator lights -->
+        <div class="screen-led red-led"></div>
+        <div class="screen-led green-led"></div>
+        
+        <div class="display-screen">
+          <div id="loader" class="loader"></div>
+          <img id="pokemon-image" src="" alt="Mystery Pokemon" class="pokemon-image silhouette hidden">
+        </div>
+      </div>
     </div>
 
     <div class="status-panel">
@@ -43,10 +56,10 @@
       <button class="choice-btn" data-index="3" disabled>Loading...</button>
     </div>
 
-    <!-- Actions row (Skip added) -->
     <div class="controls-row">
       <button id="hint-btn" class="control-btn hint-btn" disabled>Reveal Hint</button>
       <button id="skip-btn" class="control-btn skip-btn" disabled>Skip Round</button>
+      <button id="sound-btn" class="control-btn sound-btn">Sound: ON</button>
     </div>
     
     <p id="result-message"></p>
