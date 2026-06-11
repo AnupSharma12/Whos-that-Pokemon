@@ -1,4 +1,3 @@
-/* CSS including Streaks layout & styles */
 :root {
   --bg-dark: #0f1016;
   --bg-panel: rgba(22, 24, 37, 0.75);
@@ -71,7 +70,6 @@ body {
   text-shadow: 0 0 8px rgba(255, 60, 90, 0.4);
 }
 
-/* Streak active animation pop */
 .streak-active {
   animation: pop 0.4s ease-out;
 }
@@ -99,7 +97,7 @@ body {
   background: radial-gradient(circle at center, #1b264f 0%, #080d22 100%);
   border: 4px solid #1c1d27;
   border-radius: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   height: 220px;
   display: flex;
   justify-content: center;
@@ -137,10 +135,40 @@ body {
   filter: brightness(1) drop-shadow(0 0 15px rgba(255,255,255,0.35));
 }
 
+.status-panel {
+  background: rgba(0, 0, 0, 0.15);
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  border: 1px solid rgba(255,255,255,0.02);
+}
+
+#status-message {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-main);
+}
+
+.hint-display {
+  margin-top: 8px;
+}
+
+.hint-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  background-color: rgba(255, 203, 5, 0.1);
+  border: 1px solid rgba(255, 203, 5, 0.2);
+  color: var(--yellow);
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
+
 .choices-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
+  margin-bottom: 15px;
 }
 
 .choice-btn {
@@ -179,6 +207,46 @@ body {
 .choice-btn:disabled {
   cursor: default;
   opacity: 0.5;
+}
+
+/* Control Buttons row (Side-by-side buttons) */
+.controls-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.control-btn {
+  padding: 11px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-main);
+  transition: all 0.2s ease;
+}
+
+.hint-btn {
+  border-color: rgba(255, 203, 5, 0.2);
+  color: var(--yellow);
+}
+
+.hint-btn:hover:not(:disabled) {
+  background: rgba(255, 203, 5, 0.06);
+  border-color: var(--yellow);
+}
+
+.skip-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.control-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  border-color: rgba(255, 255, 255, 0.04);
 }
 
 #result-message {
