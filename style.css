@@ -1,4 +1,4 @@
-/* Premium CSS Design with Variables & Glassmorphism */
+/* CSS including Streaks layout & styles */
 :root {
   --bg-dark: #0f1016;
   --bg-panel: rgba(22, 24, 37, 0.75);
@@ -36,8 +36,58 @@ body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
+.scoreboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.score-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.score-box .label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+}
+
+.score-box .val {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #fff;
+  transition: all 0.2s ease;
+}
+
+.streak-val {
+  color: var(--red);
+  text-shadow: 0 0 8px rgba(255, 60, 90, 0.4);
+}
+
+/* Streak active animation pop */
+.streak-active {
+  animation: pop 0.4s ease-out;
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+#high-score {
+  color: var(--yellow);
+}
+
 .logo-text {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   color: var(--yellow);
   text-shadow: 0 0 10px rgba(255, 203, 5, 0.3);
   margin-top: 0;
@@ -73,7 +123,6 @@ body {
   100% { transform: rotate(360deg); }
 }
 
-/* Silhouette and reveal transition rules */
 .pokemon-image {
   max-height: 170px;
   object-fit: contain;

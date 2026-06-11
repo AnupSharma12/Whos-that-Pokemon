@@ -1,15 +1,32 @@
+// Streaks JS Setup
 const TOTAL_POKEMON = 151;
 let pokemonList = [];
 let targetPokemon = null;
 let choices = [];
-let isLocked = false; // Lock interactions during reveal state
+let isLocked = false;
+
+// Score and Streak state
+let score = 0;
+let streak = 0;
+let highScore = parseInt(localStorage.getItem('steps_high_score_s')) || 0;
 
 const imageEl = document.getElementById('pokemon-image');
 const loaderEl = document.getElementById('loader');
 const resultMessage = document.getElementById('result-message');
 const buttons = document.querySelectorAll('.choice-btn');
+const scoreEl = document.getElementById('score');
+const streakEl = document.getElementById('streak');
+const highScoreEl = document.getElementById('high-score');
+
+function updateScores() {
+  scoreEl.textContent = String(score).padStart(2, '0');
+  highScoreEl.textContent = String(highScore).padStart(2, '0');
+  streakEl.textContent = `x${streak}`;
+}
 
 async function initGame() {
+  updateScores();
+  
   try {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${TOTAL_POKEMON}`);
     const data = await response.json();
@@ -26,7 +43,6 @@ async function startNewRound() {
   resultMessage.textContent = '';
   isLocked = false;
   
-  // Set image to silhouette and hide it
   imageEl.className = 'pokemon-image silhouette hidden';
   loaderEl.classList.remove('hidden');
   
@@ -78,19 +94,34 @@ buttons.forEach((button, index) => {
     const selectedName = choices[index];
     const correctAnswer = targetPokemon.name;
     
-    // Reveal Silhouette
     imageEl.className = 'pokemon-image revealed';
-    
     buttons.forEach(btn => btn.disabled = true);
     
     if (selectedName === correctAnswer) {
       this.classList.add('correct');
       resultMessage.textContent = `Correct! It's ${correctAnswer.toUpperCase()}!`;
       resultMessage.style.color = '#00f0ad';
+      
+      // Streak Multiplier math
+      streak++;
+      score += 10 * streak;
+      
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem('steps_high_score_s', highScore);
+      }
+      
+      // Trigger CSS pop animation on streak
+      streakEl.classList.add('streak-active');
+      setTimeout(() => streakEl.classList.remove('streak-active'), 400);
     } else {
       this.classList.add('incorrect');
       resultMessage.textContent = `Wrong! It's ${correctAnswer.toUpperCase()}!`;
       resultMessage.style.color = '#ff3c5a';
+      
+      // Reset streak and score
+      streak = 0;
+      score = 0;
       
       buttons.forEach((btn, idx) => {
         if (choices[idx] === correctAnswer) {
@@ -99,7 +130,7 @@ buttons.forEach((button, index) => {
       });
     }
     
-    // Auto progress to next round after 2.5s
+    updateScores();
     setTimeout(startNewRound, 2500);
   });
 });
