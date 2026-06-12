@@ -4,6 +4,9 @@ This is an old style arcade game where you have to identify the Pokémon from th
 
 ![Who's That Pokémon? CRT Gameplay](assets/gameplay.png)
 
+> ### 🤖 AI Declaration
+> This project utilized AI tools during development: **GitHub Copilot** was used for code completion and logic implementation, and **Gemini** was used for styling and UI design assistance.
+
 ## Try It Out
 
 You can play this game in your browser without having to set anything up.
