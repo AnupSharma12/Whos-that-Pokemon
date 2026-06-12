@@ -1,66 +1,73 @@
 # Who's That Pokémon?
 
-A retro-styled CRT arcade web game where players test their knowledge of the original 151 Pokémon by identifying silhouettes under a streak-based score system.
+A retro CRT arcade game where you identify Gen 1 Pokémon silhouettes. Covers all 151 originals, tracks streaks, and looks like something you'd find in a dusty 1999 basement.
 
 ![Who's That Pokémon? CRT Gameplay](assets/gameplay.png)
 
 ## 🎮 Try It Out
 
-You can play the live game directly in your browser here:
+Play it in your browser, no setup needed:
+
 👉 **[Play the Live Demo](https://anupsharma12.github.io/Whos-that-Pokemon/)**
 
 ---
 
 ## ⚡ Quick Start
 
-No installations, compile steps, or database setups are required. You can launch the game in seconds:
+Clone the repo and spin up a local server. The server step matters — browsers block local scripts and the Web Audio API without one.
 
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/AnupSharma12/Whos-that-Pokemon.git
    cd Whos-that-Pokemon
    ```
+
 2. **Start a local server:**
-   Running a local server prevents browser security/CORS restrictions when loading local scripts or utilizing the Web Audio API.
-   * If you have Python:
-     ```bash
-     python -m http.server 8000
-     ```
-   * If you have Node:
-     ```bash
-     npx serve
-     ```
+
+   With Python:
+   ```bash
+   python -m http.server 8000
+   ```
+
+   With Node:
+   ```bash
+   npx serve
+   ```
+
 3. **Open the game:**
-   Navigate to `http://localhost:8000` (or the port specified by your server) to start playing.
+   Go to `http://localhost:8000` (or whatever port your server reports).
 
 ---
 
 ## ✨ Features
 
-- **Retro CRT Aesthetic:** Immerse yourself in a nostalgic late-90s vibe with glass bezels, flickering LED status lights, scrolling space backgrounds, and retro CRT scanline overlays.
-- **8-Bit Audio Synth Engine:** Built-in retro audio feedback using native browser sound synthesis—no external audio files required!
-- **Dynamic PokeAPI Integration:** Randomly pulls authentic graphics, names, and typing hints directly from the PokeAPI for the first 151 generation-1 Pokémon.
-- **Streak & High Score tracking:** Correct answers increment your streak, acting as a score multiplier. High scores are persisted locally across visits using `localStorage`.
-- **Utility Game Controls:** Reveal Pokémon elemental types as hints or skip tricky rounds if you are stuck.
+- **Retro CRT look:** Glass bezels, scanline overlays, flickering LED lights, scrolling space background. Pure late-90s arcade energy.
+- **8-bit audio via Web Audio API:** Sound effects built from oscillator nodes in the browser — no audio files to download, no latency.
+- **PokeAPI integration:** Pulls sprites, names, and type data live from [PokeAPI](https://pokeapi.co/) for all 151 Gen 1 Pokémon.
+- **Streak and high score tracking:** Correct answers build your streak (which acts as a score multiplier). High scores persist between sessions via `localStorage`.
+- **Hint and skip controls:** Reveal the Pokémon's type if you're stuck, or skip the round entirely.
 
 ---
 
 ## ⚙️ How It Works
 
-### Synthesized 8-Bit Audio
-Instead of fetching bulky MP3/WAV audio clips over the network, this project leverages the browser's native **Web Audio API (`AudioContext`)**. We programmatically construct oscillator nodes (`sine`, `sawtooth`, `triangle`) and connect them to gain nodes to design classic, latency-free gaming sound effects:
-- **Click:** A brief, high-pitch triangle wave note.
-- **Win:** An ascending, three-note major arpeggio.
-- **Lose:** A descending sawtooth sequence mimicking retro fail chimes.
+### 8-Bit Audio
 
-This architecture ensures instant auditory response and allows the game to function entirely offline once assets are cached.
+Rather than loading MP3 or WAV files, the game uses the browser's **Web Audio API** directly. Oscillator nodes (`sine`, `sawtooth`, `triangle`) feed into gain nodes to produce three effects:
 
-### Responsive CSS Silhouettes
-The mystery silhouette effect is achieved purely in CSS without modifying the source images. We apply a CSS filter rule `brightness(0)` to black out the official Pokémon artwork. Upon a correct guess, incorrect guess, or skip, the CSS class switches to drop the filter, dynamically revealing the full-color artwork instantly.
+- **Click:** A short triangle wave pulse.
+- **Win:** A three-note ascending arpeggio.
+- **Lose:** A descending sawtooth sequence.
+
+This keeps the game fully offline-capable once assets are cached, and sound is instant with no loading delay.
+
+### CSS Silhouettes
+
+The silhouette effect is just `filter: brightness(0)` applied to the official Pokémon sprite. On a correct guess, wrong guess, or skip, the CSS class swaps and the filter drops, revealing the full artwork. No canvas, no image processing — the source image is never modified.
 
 ---
 
-## 📜 Credits & Acknowledgments
+## 📜 Credits
 
-- **PokeAPI:** For the amazing free and open [REST API](https://pokeapi.co/) providing Gen 1 Pokémon data.
-- **Nintendo & Game Freak:** For creating the legendary Pokémon franchise and the iconic "Who's That Pokémon?" transition screens that inspired this project.
+- **PokeAPI** — Free, open REST API for all the Gen 1 data.
+- **Nintendo & Game Freak** — For Pokémon, and for the "Who's That Pokémon?" transition segments that inspired this.
