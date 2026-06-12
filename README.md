@@ -1,73 +1,153 @@
 # Who's That Pokémon?
 
-A retro CRT arcade game where you identify Gen 1 Pokémon silhouettes. Covers all 151 originals, tracks streaks, and looks like something you'd find in a dusty 1999 basement.
+This is an old style arcade game where you have to identify the Pokémon from their silhouettes. It has all 151 of the Pokémon it keeps track of how many you get right in a row and it looks like something you would find in an old basement from 1999.
 
 ![Who's That Pokémon? CRT Gameplay](assets/gameplay.png)
 
-## 🎮 Try It Out
+## Try It Out
 
-Play it in your browser, no setup needed:
+You can play this game in your browser without having to set anything up.
 
-👉 **[Play the Live Demo](https://anupsharma12.github.io/Whos-that-Pokemon/)**
+You can do this by going to this link:
 
----
-
-## ⚡ Quick Start
-
-Clone the repo and spin up a local server. The server step matters — browsers block local scripts and the Web Audio API without one.
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/AnupSharma12/Whos-that-Pokemon.git
-   cd Whos-that-Pokemon
-   ```
-
-2. **Start a local server:**
-
-   With Python:
-   ```bash
-   python -m http.server 8000
-   ```
-
-   With Node:
-   ```bash
-   npx serve
-   ```
-
-3. **Open the game:**
-   Go to `http://localhost:8000` (or whatever port your server reports).
+**[Play the Demo](https://anupsharma12.github.io/Whos-that-Pokemon/)**
 
 ---
 
-## ✨ Features
+## Quick Start
 
-- **Retro CRT look:** Glass bezels, scanline overlays, flickering LED lights, scrolling space background. Pure late-90s arcade energy.
-- **8-bit audio via Web Audio API:** Sound effects built from oscillator nodes in the browser — no audio files to download, no latency.
-- **PokeAPI integration:** Pulls sprites, names, and type data live from [PokeAPI](https://pokeapi.co/) for all 151 Gen 1 Pokémon.
-- **Streak and high score tracking:** Correct answers build your streak (which acts as a score multiplier). High scores persist between sessions via `localStorage`.
-- **Hint and skip controls:** Reveal the Pokémon's type if you're stuck, or skip the round entirely.
+If you want to play the game on your computer you have to do a few things.
+
+First you have to get the game files from the internet.
+
+Then you have to start a program on your computer that lets you play the game.
+
+This is important because the game will not work without it.
+
+1. **Get the game files:**
+
+You can do this by using the following commands in your computer:
+
+```bash
+
+git clone https://github.com/AnupSharma12/Whos-that-Pokemon.git
+
+cd Whos-that-Pokemon
+
+```
+
+2. **Start the program:**
+
+If you have Python on your computer you can use that.
+
+You can start it by using the following command:
+
+```bash
+
+python -m http.server 8000
+
+```
+
+If you have Node on your computer you can use that instead.
+
+You can start it by using the following command:
+
+```bash
+
+npx serve
+
+```
+
+3. **Play the game:**
+
+Now you can play the game by going to this address in your browser:
+
+`http://localhost:8000` (or the address that the program tells you to go to).
 
 ---
 
-## ⚙️ How It Works
+## Features
 
-### 8-Bit Audio
+- ** style arcade look:** The game has a special old style look with a glass border around the screen lines going across the screen and lights that blink.
 
-Rather than loading MP3 or WAV files, the game uses the browser's **Web Audio API** directly. Oscillator nodes (`sine`, `sawtooth`, `triangle`) feed into gain nodes to produce three effects:
+It is like playing an arcade game from the late 1990s.
 
-- **Click:** A short triangle wave pulse.
-- **Win:** A three-note ascending arpeggio.
-- **Lose:** A descending sawtooth sequence.
+The Who's That Pokémon game has this look.
 
-This keeps the game fully offline-capable once assets are cached, and sound is instant with no loading delay.
+- **Old style sound effects:** The game uses sound effects that are made right in your browser.
 
-### CSS Silhouettes
+It does not need to download any files so the sound effects start right away.
 
-The silhouette effect is just `filter: brightness(0)` applied to the official Pokémon sprite. On a correct guess, wrong guess, or skip, the CSS class swaps and the filter drops, revealing the full artwork. No canvas, no image processing — the source image is never modified.
+The Who's That Pokémon game has these effects.
+
+- **Pokémon data from the internet:** The game gets all the Pokémon data from a website called PokeAPI.
+
+It gets the pictures, names and types of all 151 of the Pokémon.
+
+The Who's That Pokémon game uses this data.
+
+- **Keep track of your score:** The game keeps track of how Pokémon you guess correctly in a row.
+
+This is like a score that gets bigger when you guess correctly.
+
+The Who's That Pokémon game keeps track of your score.
+
+- **Get a hint or skip a question:** If you are having trouble guessing a Pokémon you can get a hint about what type of Pokémon it's
+
+You can just skip that question and go on to the next one.
+
+The Who's That Pokémon game lets you do this.
 
 ---
 
-## 📜 Credits
+## How It Works
 
-- **PokeAPI** — Free, open REST API for all the Gen 1 data.
-- **Nintendo & Game Freak** — For Pokémon, and for the "Who's That Pokémon?" transition segments that inspired this.
+### Old Style Sound Effects
+
+The game does not use any files like MP3 or WAV files.
+
+Instead it uses a program in your browser to make the sound effects.
+
+It uses sounds like a triangle sound, a sawtooth sound and a sine sound to make the effects.
+
+The game has three effects:
+
+- **Click sound:** A short triangle sound that happens when you click on something.
+
+The Who's That Pokémon game has this sound.
+
+- **Win sound:** A special sound that happens when you guess a Pokémon correctly.
+
+It is like a song that goes up.
+
+The Who's That Pokémon game has this sound.
+
+- **Lose sound:** A sound that happens when you guess a Pokémon incorrectly.
+
+It is like a sound that goes down.
+
+The Who's That Pokémon game has this sound.
+
+### Pokémon Pictures
+
+The game uses a trick to make the Pokémon pictures look like silhouettes.
+
+It just makes the picture black and white. That makes it look like a silhouette.
+
+When you guess a Pokémon correctly the picture. You can see the full picture.
+
+The game does not need to use any programs to change the picture it just uses a simple trick.
+
+The Who's That Pokémon game uses this trick.
+
+---
+
+## Credits
+
+- **PokeAPI**. This is a website that has all the data about the Pokémon.
+
+The Who's That Pokémon game uses this website to get all the Pokémon data.
+
+- **Nintendo & Game Freak**. These are the companies that made the Pokémon games and the "Whos That Pokémon?" part of the games that this game is based on.
+
+The Who's That Pokémon game is, like those games.
